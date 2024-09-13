@@ -6,6 +6,9 @@
 - [Preparation](#preparation)
 - [Superuser](#superuser)
 - [User registration](#user-registration)
+- [reCAPTCHA v2](#recaptcha-v2)
+    - [reCAPTCHA Installation](#recaptcha-installation)
+- [Secure Environment Variable](#secure-environment-variable)
 
 ### Preparation
 - Create project 
@@ -149,5 +152,61 @@
         </div>
     </div>
     ```
+
+[⬆️ Go to top](#context)
+
+### reCAPTCHA v2
+- A reCAPTCHA is a free service provided by Google that is used to protect websites against spam and abuse
+- This is typically used on registration / sign up forms
+- A `CAPTCHA` is effectively a `Turing test` that is used to tell the difference between a robot/bot against a human
+- There are multiple versions of reCAPTCHA available
+
+#### reCAPTCHA Installation
+- Install [django-recaptcha](https://pypi.org/project/django-recaptcha/)
+    - `pip install django-recaptcha`
+- Add `django_recaptcha` in `INSTALLED_APPS`
+    ```py
+    INSTALLED_APPS = [
+        ...,
+        'django_recaptcha',
+        ...
+    ]
+    ```
+- Add `reCAPTCHA` keys in `settings.py`
+    ```py
+    RECAPTCHA_PUBLIC_KEY = ''
+    RECAPTCHA_PRIVATE_KEY = ''
+    ```
+- Go to [Google reCAPTCHA](https://www.google.com/recaptcha/about/)
+- Navigate to [v3 Admin Console](https://www.google.com/recaptcha/admin/create) and get keys
+    - Choose `Challenge (v2) - Verify requests with a challenge`
+    - Select `"I'm not a robot" Checkbox - Validate requests with the "I'm not a robot" checkbox`
+- Now add captcha in `forms.py`
+    ```py
+    ...
+    from django_recaptcha.fields import ReCaptchaField
+
+    # Create user 
+    class Create_user_form(UserCreationForm):
+        ...
+        captcha = ReCaptchaField()
+    ```
+- Add `{{form.captcha}}` in `register.html` to see the reCAPTCHA
+
+[⬆️ Go to top](#context)
+
+### Secure Environment Variable
+- Install [python-decouple](https://pypi.org/project/python-decouple/)
+    - `pip install python-decouple`
+- Create `.env` file in same directory of `settings.py` and copy the secure variable to `.env` file
+- Now in `settings.py` import `config`
+    ```py
+    from decouple import config
+    DEBUG= config('DEBUG',cast=bool)
+    ALLOWED_HOSTS= ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
+    RECAPTCHA_PUBLIC_KEY= config('RECAPTCHA_PUBLIC_KEY')
+    RECAPTCHA_PRIVATE_KEY= config('RECAPTCHA_PRIVATE_KEY')
+    ```
+    > for more details and casting check [python-decouple-docs](https://github.com/HBNetwork/python-decouple)
 
 [⬆️ Go to top](#context)
