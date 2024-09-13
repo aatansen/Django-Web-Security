@@ -38,12 +38,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # created app
     'security_app',
+    
+    # form
     'crispy_forms',
+    
+    # recaptcha
     'django_recaptcha',
+    
+    #2FA
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
 ]
 
+# form 
 CRISPY_TEMPLATE_PACK= 'bootstrap4'
+
+# 2FA 
+LOGIN_URL = 'two_factor:login'
+LOGIN_REDIRECT_URL = 'dashboard'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

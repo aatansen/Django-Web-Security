@@ -9,6 +9,8 @@
 - [reCAPTCHA v2](#recaptcha-v2)
     - [reCAPTCHA Installation](#recaptcha-installation)
 - [Secure Environment Variable](#secure-environment-variable)
+- [2FA in Django](#2fa-in-django)
+    - [2FA Integration](#2fa-integration)
 
 ### Preparation
 - Create project 
@@ -208,5 +210,58 @@
     RECAPTCHA_PRIVATE_KEY= config('RECAPTCHA_PRIVATE_KEY')
     ```
     > for more details and casting check [python-decouple-docs](https://github.com/HBNetwork/python-decouple)
+
+[⬆️ Go to top](#context)
+
+### 2FA in Django
+- Two-Factor Authentication or `2FA` is an extra layer of security that is added in
+conjunction with a username and password
+- Usually, it is in the form of a physical or virtual device - (phone)
+- Users can utilize 2FA with an authenticator app or by mobile SMS's
+- Authenticator apps provide users with a random token every 30 seconds or so, which is used to login to their account
+- 2FA Apps
+    - [Google Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2)
+    - [Authy App](https://play.google.com/store/apps/details?id=com.authy.authy) & [Authy website](https://authy.com/)
+    - [Microsoft Authenticator](https://play.google.com/store/apps/details?id=com.azure.authenticator)
+
+[⬆️ Go to top](#context)
+
+#### 2FA Integration
+- Install [django-two-factor-auth](https://pypi.org/project/django-two-factor-auth/)
+    - `pip install django-two-factor-auth`
+- Read [django-two-factor-auth-docs](https://django-two-factor-auth.readthedocs.io/en/stable/installation.html)
+    - Install `pip install django-two-factor-auth[phonenumbers]`
+    - Add apps in `INSTALLED_APPS`
+        ```py
+        INSTALLED_APPS = [
+            ...
+            'django_otp',
+            'django_otp.plugins.otp_static',
+            'django_otp.plugins.otp_totp',
+            'two_factor',
+        ]
+        ```
+        > Note: There are more apps mentioned in docs
+    - Add middleware (add it after `AuthenticationMiddleware`)
+        ```py
+        ...
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django_otp.middleware.OTPMiddleware',
+        ...
+        ```
+    - Add 2FA `LOGIN_URL` & `LOGIN_REDIRECT_URL` in `settings.py`
+        ```py
+        LOGIN_URL = 'two_factor:login'
+        LOGIN_REDIRECT_URL = 'dashboard'
+        ```
+    - Add url in project `urls.py`
+        ```py
+        from two_factor.urls import urlpatterns as tf_urls
+        urlpatterns = [
+        ...
+        path('', include(tf_urls)),
+        ]
+        ```
+    - Now add name url which is `two_factor:login` to navigate to login page
 
 [⬆️ Go to top](#context)
