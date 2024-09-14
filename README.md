@@ -21,6 +21,9 @@
 - [Secure Environment Variable II](#secure-environment-variable-ii)
     - [Introduction](#introduction-1)
     - [Creating environment variables](#creating-environment-variables)
+- [Manage brute force attacks](#manage-brute-force-attacks)
+    - [Introduction](#introduction-2)
+    - [Create an account-locked template](#create-an-account-locked-template)
 
 ### Preparation
 - Create project 
@@ -392,5 +395,40 @@ sensitive data
     environ.Env.read_env()
     SECRET_KEY = env('SECRET_KEY')
     ```
+
+[⬆️ Go to top](#context)
+
+### Manage brute force attacks
+#### Introduction
+- A 'brute-force' attack is when another user attempts to login to your account by trying out multiple username and password combinations in the hope of guessing correctly
+- These attackers use a 'trial-and-error' method 
+
+[⬆️ Go to top](#context)
+
+#### Create an account-locked template
+- Create `account-locked.html` page
+    ```jinja
+    {% extends 'base.html' %}
+    {% load static %}
+
+    {% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <br><br>
+
+    <div class="container bg-white shadow-md p-5 form-layout">
+
+        <div class="text-center">
+            <i class="fa fa-lock fa-4x text-dark" aria-hidden="true"></i>
+            <h4 class="text-uppercase">Account locked</h4>
+            <p>You have been locked out of your account due to multiple failed login attempts</p>
+            <p>You may re-attempt to login to your account after the expiry period.</p>
+            <a class="btn btn-info" type="button"  href="{% url 'home' %}"> Return to Homepage </a>
+        </div>
+
+    </div>
+    {% endblock content %}
+    ```
+    > Here font-awesome version 4.7 is used for locked icon
+- Render and create url route
 
 [⬆️ Go to top](#context)
