@@ -5,6 +5,36 @@
 
 <title> SecureX | Dashboard</title>
 
-<h1>Dashboard</h1>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white justify-content-center">
+        <a class="navbar-brand main-heading"> 
+        &nbsp; SecureX 
+        </a>
+    </nav>
+    <br><br>
+    <div class="container bg-white shadow-md p-5 form-layout">
+        <h5>Welcome, {{user}}</h5>
+        <br>
+        <p>This is your dashboard</p>
+        <br>
+        <a class="btn btn-info navbar-btn" type="button" href="{% url 'user-logout' %}">Logout</a>
+    </div>
+    <br>
+
+    <div class="container bg-white shadow-md p-5 form-layout">
+        <h5>About SecureX</h5>
+        <br>
+        <p>SecureX is the most secure website in the world</p>
+    </div>
+    <br>
+
+    <div class="container bg-white shadow-md p-5 form-layout">
+        <h5>Two-Factor Authentication</h5>
+        <br>
+        <p>Two-Factor Authentication provide users with extra security</p>
+        <a class="btn btn-info navbar-btn" type="button" href="">Enable/Disable 2FA</a>
+    </div>
+</body>
+
 
 {% endblock content %}

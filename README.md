@@ -11,7 +11,7 @@
 - [Secure Environment Variable](#secure-environment-variable)
 - [2FA in Django](#2fa-in-django)
     - [2FA Integration](#2fa-integration)
-    - [Configure timezone & 2FA Setup](#configure-timezone--2fa-setup)
+    - [User logout & login required decorator](#user-logout--login-required-decorator)
 
 ### Preparation
 - Create project 
@@ -270,5 +270,22 @@ conjunction with a username and password
 #### Configure timezone & 2FA Setup
 - Go to django admin page there is `Add TOTP device` in `TOTP devices` section. Here 2FA devices will be listed
 - Set timezone `TIME_ZONE = 'Asia/Dhaka'` in settings. More timezone available at [tz database timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+
+[⬆️ Go to top](#context)
+
+#### User logout & login required decorator
+- Login required decorator
+    ```py
+    from django.contrib.auth.decorators import login_required
+    @login_required
+    ...
+    ```
+- User Logout
+    ```py
+    from django.contrib.auth.models import auth
+    def user_logout(request):
+    auth.logout(request)
+    return redirect('home')
+    ```
 
 [⬆️ Go to top](#context)
