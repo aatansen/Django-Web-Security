@@ -13,6 +13,8 @@
     - [2FA Integration](#2fa-integration)
     - [User logout & login required decorator](#user-logout--login-required-decorator)
     - [Overriding the 2FA default templates](#overriding-the-2fa-default-templates)
+    - [2FA Backup Tokens](#2fa-backup-tokens)
+    - [2FA Disable](#2fa-disable)
 
 ### Preparation
 - Create project 
@@ -302,5 +304,17 @@ conjunction with a username and password
 - After modification we can link `two_factor:setup` and `two_factor:profile` to redirect to that page accordingly
 - Change tolerance to `90` in `forms.py` of `two_factor` package
     - `env\Lib\site-packages\two_factor\forms.py`
+
+[⬆️ Go to top](#context)
+
+#### 2FA Backup Tokens
+- Enable 2FA by clicking enable button which is linked to `two_factor:setup` and scan with google authenticator
+- To get backup token navigate to 2FA profile setting page `two_factor:profile` and generate backup tokens to use it when device can't be used
+
+[⬆️ Go to top](#context)
+
+#### 2FA Disable
+- It can be found in `two_factor:profile` page 
+- Click disable by tick on sure message
 
 [⬆️ Go to top](#context)
