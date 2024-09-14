@@ -15,6 +15,9 @@
     - [Overriding the 2FA default templates](#overriding-the-2fa-default-templates)
     - [2FA Backup Tokens](#2fa-backup-tokens)
     - [2FA Disable](#2fa-disable)
+- [Session timeout](#session-timeout)
+    - [Introduction](#introduction)
+    - [Adding a session timeout](#adding-a-session-timeout)
 
 ### Preparation
 - Create project 
@@ -316,5 +319,51 @@ conjunction with a username and password
 #### 2FA Disable
 - It can be found in `two_factor:profile` page 
 - Click disable by tick on sure message
+
+[⬆️ Go to top](#context)
+
+### Session timeout
+#### Introduction
+- Users often forget to log out of their accounts, hence leaving their account idle for
+several hours
+- If they forget to logout in a public environment, anyone can simply use their computer and make devastating changes
+- Therefore, users should be logged out automatically if they remain idle for too long
+
+[⬆️ Go to top](#context)
+
+#### Adding a session timeout
+- Install [django-auto-logout](https://pypi.org/project/django-auto-logout/)
+    - `pip install django-auto-logout`
+- Install [pytz](https://pypi.org/project/pytz/)
+    - `pip install pytz`
+- Add middleware
+    ```py
+    MIDDLEWARE = [
+        ...
+        'django_auto_logout.middleware.auto_logout',
+    ]
+    ```
+- Add `context_processors`
+    ```py
+    'context_processors': [
+        ...
+        'django_auto_logout.context_processors.auto_logout_client',
+    ],
+    ```
+- Add `AUTO_LOGOUT` in `settings.py`
+    ```py
+    from datetime import timedelta
+    # Auto logout
+    AUTO_LOGOUT = {
+        'IDLE_TIME': timedelta(seconds=30),
+        # 'SESSION_TIME': timedelta(minutes=30),
+        # 'MESSAGE': 'The session has expired. Please login again to continue.',
+        'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+    }
+    ```
+- And add this in template `dashboard.html`:
+    ```jinja
+    {{ redirect_to_login_immediately }}
+    ```
 
 [⬆️ Go to top](#context)
