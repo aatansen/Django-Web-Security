@@ -6,3 +6,4 @@ django-two-factor-auth==1.17.0
 django-two-factor-auth[phonenumbers]==1.17.0
 django-auto-logout==0.5.1
 pytz==2024.2
+python-environ==0.4.54

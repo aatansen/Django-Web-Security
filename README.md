@@ -8,7 +8,7 @@
 - [User registration](#user-registration)
 - [reCAPTCHA v2](#recaptcha-v2)
     - [reCAPTCHA Installation](#recaptcha-installation)
-- [Secure Environment Variable](#secure-environment-variable)
+- [Secure Environment Variable I](#secure-environment-variable-i)
 - [2FA in Django](#2fa-in-django)
     - [2FA Integration](#2fa-integration)
     - [User logout & login required decorator](#user-logout--login-required-decorator)
@@ -18,6 +18,9 @@
 - [Session timeout](#session-timeout)
     - [Introduction](#introduction)
     - [Adding a session timeout](#adding-a-session-timeout)
+- [Secure Environment Variable II](#secure-environment-variable-ii)
+    - [Introduction](#introduction-1)
+    - [Creating environment variables](#creating-environment-variables)
 
 ### Preparation
 - Create project 
@@ -204,7 +207,7 @@
 
 [⬆️ Go to top](#context)
 
-### Secure Environment Variable
+### Secure Environment Variable I
 - Install [python-decouple](https://pypi.org/project/python-decouple/)
     - `pip install python-decouple`
 - Create `.env` file in same directory of `settings.py` and copy the secure variable to `.env` file
@@ -364,6 +367,30 @@ several hours
 - And add this in template `dashboard.html`:
     ```jinja
     {{ redirect_to_login_immediately }}
+    ```
+
+[⬆️ Go to top](#context)
+
+### Secure Environment Variable II
+#### Introduction
+- An environment variable is a variable whose value is set outside of a program
+- It is important to utilize environment variables in order to keep our sensitive data
+from our application code
+- NEVER! Deploy your application without setting environment variables for your
+sensitive data
+
+[⬆️ Go to top](#context)
+
+#### Creating environment variables
+- Install [python-environ](https://pypi.org/project/python-environ/)
+    - `pip install python-environ`
+- Copy and save secure variable inside `.env` file 
+- Now in `settings.py` add these
+    ```py
+    import environ
+    env=environ.Env()
+    environ.Env.read_env()
+    SECRET_KEY = env('SECRET_KEY')
     ```
 
 [⬆️ Go to top](#context)
