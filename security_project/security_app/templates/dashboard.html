@@ -32,7 +32,9 @@
         <h5>Two-Factor Authentication</h5>
         <br>
         <p>Two-Factor Authentication provide users with extra security</p>
-        <a class="btn btn-info navbar-btn" type="button" href="">Enable/Disable 2FA</a>
+        <a class="btn btn-info navbar-btn" type="button" href="{% url 'two_factor:setup' %}">Enable 2FA</a>
+        <br><br>
+        <a class="btn btn-primary navbar-btn" type="button" href="{% url 'two_factor:profile' %}">2FA account settings</a>
     </div>
 </body>
 

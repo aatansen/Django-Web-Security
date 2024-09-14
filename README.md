@@ -12,6 +12,7 @@
 - [2FA in Django](#2fa-in-django)
     - [2FA Integration](#2fa-integration)
     - [User logout & login required decorator](#user-logout--login-required-decorator)
+    - [Overriding the 2FA default templates](#overriding-the-2fa-default-templates)
 
 ### Preparation
 - Create project 
@@ -287,5 +288,19 @@ conjunction with a username and password
     auth.logout(request)
     return redirect('home')
     ```
+
+[⬆️ Go to top](#context)
+
+#### Overriding the 2FA default templates
+- Download [django-two-factor-auth source code](https://github.com/jazzband/django-two-factor-auth) or just go to installed package directory and navigate to `two_factor`
+- Copy the content of the `templates` and `templatetags` directory to our app directory
+    - `security_project\security_app\`
+- Modify `_base.html` to modify the login page
+    - To modify field use `_wizard_forms.html`
+    - To modify button use `_wizard_actions.html`
+- Modify `templatetags` for custom classes tag
+- After modification we can link `two_factor:setup` and `two_factor:profile` to redirect to that page accordingly
+- Change tolerance to `90` in `forms.py` of `two_factor` package
+    - `env\Lib\site-packages\two_factor\forms.py`
 
 [⬆️ Go to top](#context)
