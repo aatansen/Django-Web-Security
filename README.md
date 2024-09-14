@@ -11,6 +11,7 @@
 - [Secure Environment Variable](#secure-environment-variable)
 - [2FA in Django](#2fa-in-django)
     - [2FA Integration](#2fa-integration)
+    - [Configure timezone & 2FA Setup](#configure-timezone--2fa-setup)
 
 ### Preparation
 - Create project 
@@ -263,5 +264,11 @@ conjunction with a username and password
         ]
         ```
     - Now add name url which is `two_factor:login` to navigate to login page
+
+[⬆️ Go to top](#context)
+
+#### Configure timezone & 2FA Setup
+- Go to django admin page there is `Add TOTP device` in `TOTP devices` section. Here 2FA devices will be listed
+- Set timezone `TIME_ZONE = 'Asia/Dhaka'` in settings. More timezone available at [tz database timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 [⬆️ Go to top](#context)
