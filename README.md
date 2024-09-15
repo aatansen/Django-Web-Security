@@ -25,6 +25,7 @@
     - [Introduction](#introduction-2)
     - [Create an account-locked template](#create-an-account-locked-template)
     - [Brute force prevent integration](#brute-force-prevent-integration)
+    - [Brute force prevention - Custom functionality](#brute-force-prevention---custom-functionality)
 
 ### Preparation
 - Create project 
@@ -475,5 +476,14 @@ sensitive data
 - To reset restriction
     - `py manage.py axes_reset`
 
+[⬆️ Go to top](#context)
+
+#### Brute force prevention - Custom functionality
+- Read the [customizing axes docs](https://django-axes.readthedocs.io/en/latest/5_customization.html#customizing-lockout-parameters)
+    - Using `username` to identify the user for lockout purposes
+        ```py
+        # Axes additional configurations
+        AXES_LOCKOUT_PARAMETERS = ["username"]
+        ```
 
 [⬆️ Go to top](#context)

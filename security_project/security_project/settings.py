@@ -187,3 +187,6 @@ AXES_FAILURE_LIMIT: 3 # How many times a user can fail a login
 AXES_COOLOFF_TIME: 2 # Wait 2 hours before attempting to login again 
 AXES_RESET_ON_SUCCESS = True # Reset failed login attempts 
 AXES_LOCKOUT_TEMPLATE = 'account-locked.html' # Add a custom template on failure 
+
+# Axes additional configurations
+AXES_LOCKOUT_PARAMETERS = ["username"]
