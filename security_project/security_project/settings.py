@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_static',
     'django_otp.plugins.otp_totp',
     'two_factor',
+    
+    # Axes
+    'axes',
 ]
 
 # form 
@@ -76,6 +79,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_auto_logout.middleware.auto_logout',
+    'axes.middleware.AxesMiddleware',
+]
+
+# Axes 
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesStandaloneBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'security_project.urls'
@@ -168,3 +181,9 @@ AUTO_LOGOUT = {
     # 'MESSAGE': 'The session has expired. Please login again to continue.',
     'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
 }
+
+# Axes configuration settings
+AXES_FAILURE_LIMIT: 3 # How many times a user can fail a login
+AXES_COOLOFF_TIME: 2 # Wait 2 hours before attempting to login again 
+AXES_RESET_ON_SUCCESS = True # Reset failed login attempts 
+AXES_LOCKOUT_TEMPLATE = 'account-locked.html' # Add a custom template on failure 

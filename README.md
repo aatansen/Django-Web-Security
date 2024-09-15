@@ -24,6 +24,7 @@
 - [Manage brute force attacks](#manage-brute-force-attacks)
     - [Introduction](#introduction-2)
     - [Create an account-locked template](#create-an-account-locked-template)
+    - [Brute force prevent integration](#brute-force-prevent-integration)
 
 ### Preparation
 - Create project 
@@ -430,5 +431,49 @@ sensitive data
     ```
     > Here font-awesome version 4.7 is used for locked icon
 - Render and create url route
+
+[⬆️ Go to top](#context)
+
+#### Brute force prevent integration
+- Install [django-axes](https://pypi.org/project/django-axes/)
+    - `pip install django-axes`
+- Go to [django-axes-docs](https://django-axes.readthedocs.io/en/latest/2_installation.html)
+    - Add `'axes',` in `INSTALLED_APPS`
+        ```py
+        INSTALLED_APPS = [
+            ...
+            'axes',
+        ]
+        ```
+    - Add `AUTHENTICATION_BACKENDS` in `settings.py`
+        ```py
+        AUTHENTICATION_BACKENDS = [
+            # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+            'axes.backends.AxesStandaloneBackend',
+
+            # Django ModelBackend is the default authentication backend.
+            'django.contrib.auth.backends.ModelBackend',
+        ]
+        ```
+    - Add `MIDDLEWARE`
+        ```py
+        MIDDLEWARE = [
+            ...
+            'axes.middleware.AxesMiddleware',
+        ]
+        ```
+    - Add axes configuration settings
+        ```py
+        # Axes configuration settings
+        AXES_FAILURE_LIMIT: 3 # How many times a user can fail a login
+        AXES_COOLOFF_TIME: 2 # Wait 2 hours before attempting to login again 
+        AXES_RESET_ON_SUCCESS = True # Reset failed login attempts 
+        AXES_LOCKOUT_TEMPLATE = 'account-locked.html' # Add a custom template on failure 
+        ```
+    - Now `py manage.py check` to see any error
+    - Finally `py manage.py migrate` and run the server
+- To reset restriction
+    - `py manage.py axes_reset`
+
 
 [⬆️ Go to top](#context)
