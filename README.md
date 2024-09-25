@@ -26,6 +26,8 @@
     - [Create an account-locked template](#create-an-account-locked-template)
     - [Brute force prevent integration](#brute-force-prevent-integration)
     - [Brute force prevention - Custom functionality](#brute-force-prevention---custom-functionality)
+- [Password Management](#password-management)
+    - [Password Reset](#password-reset)
 
 ### Preparation
 - Create project 
@@ -485,5 +487,56 @@ sensitive data
         # Axes additional configurations
         AXES_LOCKOUT_PARAMETERS = ["username"]
         ```
+
+[⬆️ Go to top](#context)
+
+### Password Management
+#### Password Reset
+- Setup url/views in `urls.py`
+    ```py
+    # password reset 
+    from django.contrib.auth import views as auth_views
+
+    urlpatterns = [
+        ...
+        # password reset 
+        # email submit form
+        path('reset_password/',auth_views.PasswordResetView.as_view(),name='reset_password'),
+        # Reset message
+        path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
+        # Link for password reset
+        path('reset/<uidb64>/<token>',auth_views.PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
+        # Password changed success message
+        path('password_reset_complete/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
+        
+    ]
+    ```
+- Add configuration in `settings.py`
+    ```py
+    # Password reset
+    EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST='smtp.gmail.com'
+    EMAIL_PORT='587'
+    EMAIL_USE_TLS='True'
+
+    EMAIL_HOST_USER=''
+    EMAIL_HOST_PASSWORD=''
+    DEFAULT_FROM_EMAIL=''
+    ```
+- For gmail configuration backend we need app password
+    - Go to [Google my account apppasswords](https://myaccount.google.com/apppasswords)
+    - Create a new app and get the password and fill-up below config
+        ```py
+        EMAIL_HOST_USER=''
+        EMAIL_HOST_PASSWORD=''
+        DEFAULT_FROM_EMAIL=''
+        ```
+- Now to modify default view template of reset password page
+    - Create a directory in templates `password_reset`
+    - Create `password-reset.html`, `password-reset-sent.html`, `password-reset-form.html`, `password-reset-complete.html`
+    - Now in `urls.py` set `template_name` argument in `as_view` for each created password pages
+        - `as_view(template_name='password_reset/password-reset.html')`
+        - ...
+- Now we will be able to reset password
 
 [⬆️ Go to top](#context)
