@@ -28,6 +28,7 @@
     - [Brute force prevention - Custom functionality](#brute-force-prevention---custom-functionality)
 - [Password Management](#password-management)
     - [Password Reset](#password-reset)
+- [Django Messages]()
 
 ### Preparation
 - Create project 
@@ -538,5 +539,36 @@ sensitive data
         - `as_view(template_name='password_reset/password-reset.html')`
         - ...
 - Now we will be able to reset password
+
+[⬆️ Go to top](#context)
+
+### Django Messages
+- Import django message
+    - `from django.contrib import messages`
+- Add messages where required `messages.success(request,"Logout success!")`
+- More tag can be found in [django-message-tags](https://docs.djangoproject.com/en/5.1/ref/contrib/messages/#message-tags)
+- Create a html file in templates directory `messages.html`
+    ```jinja
+    {% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <p>{{ message }}</p>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    ```
+    - We can also use `{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}`
+- To style the message
+    - `<p id="message-timer" class="alert alert-success float-center text-center"> <i class="fa fa-check" aria-hidden="true"></i> &nbsp; {{message}} </p>`
+    - Here `message-timer` id will be used in `scripts.js` to make the message disappear in 2 seconds
+        ```js
+        var message_timeout = document.getElementById("message-timer");
+
+        setTimeout(function () {
+        message_timeout.style.display = "none";
+        }, 5000);
+        ```
+    - Make sure to add the `scripts.js` in `base.html`
+        - `<script src="{% static 'js/scripts.js' %}"> </script>`
 
 [⬆️ Go to top](#context)

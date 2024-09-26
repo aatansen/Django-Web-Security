@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import *
 from django.contrib.auth.models import auth
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -26,6 +27,7 @@ def dashboard(request):
 
 def user_logout(request):
     auth.logout(request)
+    messages.success(request,"Logout success!")
     return redirect('home')
 
 def account_locked(request):
