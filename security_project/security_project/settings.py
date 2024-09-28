@@ -178,7 +178,7 @@ RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 AUTO_LOGOUT = {
     'IDLE_TIME': timedelta(seconds=30),
     # 'SESSION_TIME': timedelta(minutes=30),
-    # 'MESSAGE': 'The session has expired. Please login again to continue.',
+    'MESSAGE': 'The session has expired. Please login again to continue.',
     'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
 }
 

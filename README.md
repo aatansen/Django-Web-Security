@@ -15,9 +15,10 @@
     - [Overriding the 2FA default templates](#overriding-the-2fa-default-templates)
     - [2FA Backup Tokens](#2fa-backup-tokens)
     - [2FA Disable](#2fa-disable)
-- [Session timeout](#session-timeout)
+- [Session timeout - Auto Logout](#session-timeout---auto-logout)
     - [Introduction](#introduction)
     - [Adding a session timeout](#adding-a-session-timeout)
+    - [Session Timeout - Auto Logout Message](#session-timeout---auto-logout-message)
 - [Secure Environment Variable II](#secure-environment-variable-ii)
     - [Introduction](#introduction-1)
     - [Creating environment variables](#creating-environment-variables)
@@ -28,7 +29,8 @@
     - [Brute force prevention - Custom functionality](#brute-force-prevention---custom-functionality)
 - [Password Management](#password-management)
     - [Password Reset](#password-reset)
-- [Django Messages]()
+- [Django Messages](#django-messages)
+    - [Session Timeout - Auto Logout Message](#session-timeout---auto-logout-message)
 
 ### Preparation
 - Create project 
@@ -333,7 +335,7 @@ conjunction with a username and password
 
 [⬆️ Go to top](#context)
 
-### Session timeout
+### Session timeout - Auto Logout
 #### Introduction
 - Users often forget to log out of their accounts, hence leaving their account idle for
 several hours
@@ -570,5 +572,35 @@ sensitive data
         ```
     - Make sure to add the `scripts.js` in `base.html`
         - `<script src="{% static 'js/scripts.js' %}"> </script>`
+
+[⬆️ Go to top](#context)
+
+#### Session Timeout - Auto Logout Message
+- Update `settings.py` and add `MESSAGE` in `AUTO_LOGOUT`
+    ```py
+    # Auto logout
+    AUTO_LOGOUT = {
+        'IDLE_TIME': timedelta(seconds=5),
+        # 'SESSION_TIME': timedelta(minutes=30),
+        'MESSAGE': 'The session has expired. Please login again to continue.',
+        'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+    }
+    ```
+- Add message `info` tag in `messages.html`
+    ```jinja
+    ...
+    {% elif message.tags == 'info' %}
+        <div class="message alert alert-info float-center text-center {{ message.tags }}">
+      <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; {{ message }}
+    </div>
+    ...
+    ```
+- Include `messages.html` in `two_factor` login page `_base.html`
+    ```jinja
+    ...
+    {% include 'messages.html' %}
+    ...
+    ```
+- Now the message will be shown when auto logout
 
 [⬆️ Go to top](#context)
