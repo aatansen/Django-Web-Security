@@ -31,6 +31,8 @@
     - [Password Reset](#password-reset)
 - [Django Messages](#django-messages)
     - [Session Timeout - Auto Logout Message](#session-timeout---auto-logout-message)
+- [Custom Email Validations](#custom-email-validations)
+    - [Adding favicon](#adding-a-favicon)
 
 ### Preparation
 - Create project 
@@ -602,5 +604,19 @@ sensitive data
     ...
     ```
 - Now the message will be shown when auto logout
+
+[⬆️ Go to top](#context)
+
+### Custom Email Validations
+#### Adding a favicon
+- Go to [favicon](https://favicon.io/)
+- Generate Text to favicon
+- Add favicon files in static `images` directory
+- Add those in `base.html`
+    ```html
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/small-favicon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/large-favicon.png' %}">
+    ```
 
 [⬆️ Go to top](#context)
