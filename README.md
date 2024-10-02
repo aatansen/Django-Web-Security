@@ -33,6 +33,7 @@
     - [Session Timeout - Auto Logout Message](#session-timeout---auto-logout-message)
 - [Custom Email Validations](#custom-email-validations)
     - [Adding favicon](#adding-a-favicon)
+    - [User Email Validation](#user-email-validation)
 
 ### Preparation
 - Create project 
@@ -617,6 +618,34 @@ sensitive data
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/small-favicon.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/large-favicon.png' %}">
+    ```
+
+[⬆️ Go to top](#context)
+
+#### User Email Validation
+- Using Crispy form FormHelper
+    ```py
+    ...
+    from crispy_forms.helper import FormHelper
+    from django import forms
+
+    # Create user 
+    class Create_user_form(UserCreationForm):
+        helper=FormHelper()
+        ...
+        
+        def __init__(self,*args,**kwargs):
+            super(Create_user_form,self).__init__(*args,**kwargs)
+            self.helper=FormHelper()
+            
+        def clean_email(self):
+            email=self.cleaned_data.get('email')
+            
+            if User.objects.filter(email=email).exists():
+                raise forms.ValidationError("This email already registered")
+            
+            if len(email)<=300:
+                raise forms.ValidationError("This email is too long")
     ```
 
 [⬆️ Go to top](#context)
