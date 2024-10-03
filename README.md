@@ -35,6 +35,7 @@
     - [Adding favicon](#adding-a-favicon)
     - [User Email Validation](#user-email-validation)
 - [Pre-Deployment Security](#pre-deployment-security)
+- [File Handling](#file-handling)
 
 ### Preparation
 - Create project 
@@ -685,5 +686,16 @@ sensitive data
 - Change admin site url route
 - Check website using [Mozilla Observatory](https://observatory.mozilla.org/), [DJ Checkup](https://djcheckup.com/)
 - Also check [CSP](https://pypi.org/project/django-csp/) (Content Security policy)
+
+[⬆️ Go to top](#context)
+
+### File Handling
+- Good file management principles to research and to integrate in Django web application would include to:
+    - Only allow registered users to upload files
+    - Limit the number of characters in an uploaded file's name
+    - Limit the size of an uploaded file
+    - Rename a user's file name upon upload
+    - Validate the file's extension (.pdf) to ensure it isn't a type of malware
+
 
 [⬆️ Go to top](#context)
