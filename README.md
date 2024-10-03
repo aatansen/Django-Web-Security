@@ -684,7 +684,11 @@ sensitive data
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     ```
 - Change admin site url route
-- Check website using [Mozilla Observatory](https://observatory.mozilla.org/), [DJ Checkup](https://djcheckup.com/)
+- Check website using
+    - [Mozilla Observatory](https://observatory.mozilla.org/)
+    - [DJ Checkup](https://djcheckup.com/)
+    - [Sucuri](https://sitecheck.sucuri.net/)
+    - [SSLTrust](https://www.ssltrust.com.au/ssl-tools/website-security-check)
 - Also check [CSP](https://pypi.org/project/django-csp/) (Content Security policy)
 
 [⬆️ Go to top](#context)
