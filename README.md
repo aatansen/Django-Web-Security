@@ -34,6 +34,7 @@
 - [Custom Email Validations](#custom-email-validations)
     - [Adding favicon](#adding-a-favicon)
     - [User Email Validation](#user-email-validation)
+- [Pre-Deployment Security](#pre-deployment-security)
 
 ### Preparation
 - Create project 
@@ -647,5 +648,42 @@ sensitive data
             if len(email)<=300:
                 raise forms.ValidationError("This email is too long")
     ```
+
+[⬆️ Go to top](#context)
+
+### Pre-Deployment Security
+- Make sure `DEBUG=False`
+- Add `ALLOWED_HOSTS`
+- Check any issue before deploy `py manage.py check --deploy`
+    ```text
+    WARNINGS:
+    ?: (security.W004) You have not set a value for the SECURE_HSTS_SECONDS setting. If your entire site is served only over SSL, you may want to consider setting a value and enabling HTTP Strict Transport Security. Be sure to read the documentation first; enabling HSTS carelessly can cause serious, irreversible problems.
+    ?: (security.W008) Your SECURE_SSL_REDIRECT setting is not set to True. Unless your site should be available over both SSL and non-SSL connections, you may want to either set this setting True or configure a load balancer or reverse-proxy server to redirect all connections to HTTPS.
+    ?: (security.W012) SESSION_COOKIE_SECURE is not set to True. Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
+    ?: (security.W016) You have 'django.middleware.csrf.CsrfViewMiddleware' in your MIDDLEWARE, but you have not set CSRF_COOKIE_SECURE to True. Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
+    ?: (security.W018) You should not have DEBUG set to True in deployment.
+    ```
+- This will only work in deployment server
+    ```py
+    # Deployment settings 
+    # Protection against XSS attacks
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+
+    # CSRF Protection
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIES_SECURE = True
+
+    # SSL redirect
+    SECURE_SSL_REDIRECT = True
+
+    # Enable HSTS
+    SECURE_HSTS_SECONDS = 86400
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    ```
+- Change admin site url route
+- Check website using [Mozilla Observatory](https://observatory.mozilla.org/), [DJ Checkup](https://djcheckup.com/)
+- Also check [CSP](https://pypi.org/project/django-csp/) (Content Security policy)
 
 [⬆️ Go to top](#context)
